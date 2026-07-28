@@ -1,0 +1,30 @@
+# Environment Variables
+.env
+
+# Node
+node_modules/
+dist/
+npm-debug.log*
+
+# Python
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Database
+backend/movies.db
+*.sqlite3
+
+# Machine Learning & Datasets
+dataset/movies.csv
+backend/movies_dict.pkl
+backend/similarity.pkl
+*.pkl
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
