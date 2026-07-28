@@ -17,7 +17,7 @@ const AuthPage = () => {
     const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
     
     try {
-      const res = await axios.post(`http://localhost:5000${endpoint}`, { username, password });
+      const res = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${endpoint}`, { username, password });
       
       if (isLogin) {
         localStorage.setItem('token', res.data.token);

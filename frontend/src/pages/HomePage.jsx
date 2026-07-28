@@ -9,7 +9,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/movies/popular');
+        const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/movies/popular`);
         if (res.data && res.data.results) {
           setPopularMovies(res.data.results);
         }

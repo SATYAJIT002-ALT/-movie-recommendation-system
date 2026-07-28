@@ -14,12 +14,12 @@ const MovieDetails = () => {
     const fetchDetails = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`http://localhost:5000/api/movies/${id}`);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/movies/${id}`);
         setMovie(res.data);
         
         // Fetch recommendations from our ML model based on title
         if (res.data.title) {
-          const recRes = await axios.get(`http://localhost:5000/api/movies/recommend?title=${encodeURIComponent(res.data.title)}`);
+          const recRes = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/movies/recommend?title=${encodeURIComponent(res.data.title)}`);
           setRecommendations(recRes.data);
         }
       } catch (err) {

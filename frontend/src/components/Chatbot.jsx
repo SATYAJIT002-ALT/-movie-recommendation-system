@@ -30,7 +30,7 @@ const Chatbot = () => {
     setIsTyping(true);
 
     try {
-      const res = await axios.post('http://localhost:5000/api/chatbot', { message: userMsg });
+      const res = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/chatbot`, { message: userMsg });
       setMessages(prev => [...prev, { text: res.data.response, sender: 'ai' }]);
     } catch (err) {
       setMessages(prev => [...prev, { text: "Sorry, I couldn't reach the server. Make sure it's running!", sender: 'ai' }]);
