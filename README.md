@@ -1,5 +1,7 @@
 # Cinemax - Premium Movie Recommendation System
 
+🚀 **Live Demo:** [https://movie-recommendation-system-phi-ten.vercel.app](https://movie-recommendation-system-phi-ten.vercel.app)
+
 A full-stack, production-grade movie recommendation platform featuring a 3D animated UI, AI Chatbot, and a custom Machine Learning recommendation engine.
 
 ## Tech Stack
