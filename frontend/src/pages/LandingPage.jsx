@@ -60,7 +60,7 @@ const LandingPage = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link to="/auth" className="relative group px-8 py-4 bg-primary text-white font-bold rounded-full text-lg overflow-hidden transition-all hover:scale-105">
+            <Link to={localStorage.getItem('token') ? "/home" : "/auth"} className="relative group px-8 py-4 bg-primary text-white font-bold rounded-full text-lg overflow-hidden transition-all hover:scale-105">
               <span className="relative z-10">Start Exploring</span>
               <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-primary to-[#ff4040] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
             </Link>
