@@ -9,9 +9,14 @@ const HomePage = () => {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/movies/popular`);
+        // Pick a random page between 1 and 20 to ensure fresh movies
+        const randomPage = Math.floor(Math.random() * 20) + 1;
+        const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/movies/popular?page=${randomPage}`);
+        
         if (res.data && res.data.results) {
-          setPopularMovies(res.data.results);
+          // Shuffle the movies for an even more randomized feel
+          const shuffledMovies = res.data.results.sort(() => 0.5 - Math.random());
+          setPopularMovies(shuffledMovies);
         }
       } catch (err) {
         console.error("Error fetching movies", err);

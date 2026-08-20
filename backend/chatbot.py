@@ -11,9 +11,22 @@ if GEMINI_API_KEY and GEMINI_API_KEY != 'YOUR_GEMINI_API_KEY_HERE':
 else:
     client = None
 
+def _fallback_response(user_message):
+    msg = user_message.lower()
+    if 'action' in msg:
+        return "Since I'm in offline mode (API key invalid), I recommend checking out **The Dark Knight** or **Die Hard**!"
+    elif 'comedy' in msg:
+        return "I'm offline right now, but for comedy I'd suggest **Superbad** or **Dumb and Dumber**!"
+    elif 'sci-fi' in msg or 'space' in msg:
+        return "Offline mode! But **Interstellar** and **The Matrix** are always great sci-fi choices."
+    elif 'horror' in msg or 'scary' in msg:
+        return "I'm currently offline, but **The Conjuring** is a solid scary movie!"
+    else:
+        return "Hello! I am currently in **Offline Mode** because the Gemini API key is invalid or missing. Please add a valid key in the `backend/.env` file. In the meantime, try asking me for a genre like 'action' or 'comedy'!"
+
 def get_movie_suggestion(user_message):
     if not client:
-        return "Gemini API Key is not configured. Please add it to the .env file."
+        return _fallback_response(user_message)
         
     prompt = f"""
     You are an AI Movie Assistant for a premium movie recommendation platform.
@@ -26,9 +39,14 @@ def get_movie_suggestion(user_message):
     
     try:
         response = client.models.generate_content(
-            model='gemini-flash-latest',
+            model='gemini-3.6-flash',
             contents=prompt,
         )
         return response.text
     except Exception as e:
-        return f"Error communicating with AI: {str(e)}"
+        error_msg = str(e)
+        if '401' in error_msg or 'UNAUTHENTICATED' in error_msg or '404' in error_msg or 'NOT_FOUND' in error_msg:
+            return _fallback_response(user_message)
+        elif '503' in error_msg or 'UNAVAILABLE' in error_msg or '429' in error_msg or 'high demand' in error_msg:
+            return "Whoops! The AI servers are currently experiencing high demand and need a quick breather. Please try your request again in a few moments!"
+        return f"Error communicating with AI: {error_msg}"
